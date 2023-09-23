@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JVMN8CS4EVrkYGWNHN/1My3zmOHltg46aCziW+jrWfCOJ/8D1g14+FOtMGxjSyzeYdKKm3xhGp8KHBiqSy1ERA==",
+  "dgSpecHash": "ElMPsw/b0AazlMrNjNQvpLL9W05SwB6lSG7LwBA+5eO3dpypqF+bryF55StgDDyPCb3MbQngwi9N6I+pdZ0iRA==",
   "success": true,
-  "projectFilePath": "C:\\C#\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
+  "projectFilePath": "C:\\API\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\RobertaMedeirosStump\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\RobertaMedeirosStump\\.nuget\\packages\\fluentvalidation\\10.4.0\\fluentvalidation.10.4.0.nupkg.sha512",

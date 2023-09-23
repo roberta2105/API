@@ -10,8 +10,12 @@ namespace ControleFacil.Api.Data
 {  //Todo context herda de DbContext
     public class ApplicationContext : DbContext
     {
-        //Armagena a entidade usuario no DbSet
+        //Armagena a entidade no DbSet
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<NaturezaDeLancamento> NaturezaDeLancamento { get; set; }
+
+        public DbSet<Apagar> Apagar { get; set; }
+
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options){}
     
@@ -19,6 +23,10 @@ namespace ControleFacil.Api.Data
         {
             //Se basear no UsuarioMap para criar um usuario
             modelBuilder.ApplyConfiguration(new UsuarioMap());
+
+            modelBuilder.ApplyConfiguration(new NaturezaDeLancamentoMap());
+
+            modelBuilder.ApplyConfiguration(new ApagarMap());
         }
     }
 }
