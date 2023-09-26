@@ -10,7 +10,7 @@ namespace ControleFacil.Api.Damain.Models
     {
         //Chave primária da tabela
         [Key]
-        public long id { get; set;}
+        public long Id { get; set;}
 
         //Campo obrigatório. Passa um erro caso o campo esteja vazio
         [Required(ErrorMessage = "O campo de email é obrigatório")]

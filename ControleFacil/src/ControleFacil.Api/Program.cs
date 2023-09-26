@@ -1,4 +1,6 @@
 using System.Text;
+using ControleFacil.Api.Damain.Repository.Classes;
+using ControleFacil.Api.Damain.Repository.Interfaces;
 using ControleFacil.Api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +29,12 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     options.UseNpgsql(connectionString), ServiceLifetime.Transient, ServiceLifetime.Transient);
     builder.Services
     .AddSingleton(builder.Configuration)
-    .AddSingleton(builder.Environment);
+    .AddSingleton(builder.Environment)
+    //A linha de código está dizendo ao sistema que, 
+    //sempre que alguém precisar de um objeto que atenda à interface IUsuarioRepository, ele deve 
+    //instanciar a classe UsuarioRepository. 
+    .AddScoped<IUsuarioRepository, UsuarioRepository>()
+    .AddScoped<INaturezaRepository, NaturezaRepository>();
 }
 
 // Configura o serviços da API.
