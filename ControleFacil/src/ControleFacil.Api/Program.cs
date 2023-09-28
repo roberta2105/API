@@ -1,8 +1,11 @@
 using System.Text;
 using AutoMapper;
 using ControleFacil.Api.AutoMapper;
+using ControleFacil.Api.Contract.NaturezaDeLancamento;
 using ControleFacil.Api.Damain.Repository.Classes;
 using ControleFacil.Api.Damain.Repository.Interfaces;
+using ControleFacil.Api.Damain.Services;
+using ControleFacil.Api.Damain.Services.Classes;
 using ControleFacil.Api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +36,7 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     var config = new MapperConfiguration(cfg => 
     {
         cfg.AddProfile<UsuarioProfile>();
+        cfg.AddProfile<NaturezaProfile>();
         //colocar outros profiles
     });
 
@@ -48,7 +52,9 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     //sempre que alguém precisar de um objeto que atenda à interface IUsuarioRepository, ele deve 
     //instanciar a classe UsuarioRepository. 
     .AddScoped<IUsuarioRepository, UsuarioRepository>()
-    .AddScoped<INaturezaRepository, NaturezaRepository>();
+    .AddScoped<INaturezaRepository, NaturezaRepository>()
+    .AddScoped<IUsuarioService, UsuarioService>()
+    .AddScoped<IServices<NaturezaRequestContract, NaturezaResponseContract, long>, NaturezaService>();
 }
 
 // Configura o serviços da API.

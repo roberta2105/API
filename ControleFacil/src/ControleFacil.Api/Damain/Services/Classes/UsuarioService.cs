@@ -19,13 +19,15 @@ namespace ControleFacil.Api.Damain.Services.Classes
         //injeção de dependência.
         private readonly IUsuarioRepository _usuarioRepository;
 
-        //Uma injeção de dependência para mapear objetos entre tipos diferentes.
+        //Uma injeção de dependência para mapear objetos entre
         public readonly IMapper _mapper;
 
 
         public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper)
         {
+            //Retorna os métodos de IUsuarioRepository e por injeção de dependência retorna as classes herdadas por essa classe
             _usuarioRepository = usuarioRepository;
+            //Retorna uma entidade apartir de um RS e um RQ
             _mapper = mapper;
         }
 
@@ -40,7 +42,6 @@ namespace ControleFacil.Api.Damain.Services.Classes
 
             return _mapper.Map<UsuarioResponseContract>(usuario);
         }
-
 
 
         public async Task<UsuarioResponseContract> Atualizar(long id, UsuarioRequestContract entidade, long idUsuario)
