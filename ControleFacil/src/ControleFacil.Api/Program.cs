@@ -1,4 +1,6 @@
 using System.Text;
+using AutoMapper;
+using ControleFacil.Api.AutoMapper;
 using ControleFacil.Api.Damain.Repository.Classes;
 using ControleFacil.Api.Damain.Repository.Interfaces;
 using ControleFacil.Api.Data;
@@ -27,9 +29,21 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
 
     builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(connectionString), ServiceLifetime.Transient, ServiceLifetime.Transient);
+    
+    var config = new MapperConfiguration(cfg => 
+    {
+        cfg.AddProfile<UsuarioProfile>();
+        //colocar outros profiles
+    });
+
+    IMapper mapper = config.CreateMapper();
+   
+    
     builder.Services
     .AddSingleton(builder.Configuration)
     .AddSingleton(builder.Environment)
+    .AddSingleton(mapper)
+
     //A linha de código está dizendo ao sistema que, 
     //sempre que alguém precisar de um objeto que atenda à interface IUsuarioRepository, ele deve 
     //instanciar a classe UsuarioRepository. 

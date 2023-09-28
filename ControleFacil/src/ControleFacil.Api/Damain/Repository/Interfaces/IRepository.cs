@@ -7,7 +7,8 @@ namespace ControleFacil.Api.Damain.Repository.Interfaces
 {
     public interface IRepository<T, I> where T : class
     {
-        // Retorna todos os elementos de "T"
+        // Retorna todos os elementos de "T". 
+        //T = classe/ entidade = objeto
         // Task > Retorna uma tarefa. IEnumerable > Retorna uma coleção de algum elemento
         Task<IEnumerable<T>> Obter();
 
