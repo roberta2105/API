@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using ControleFacil.Api.Contract.Usuario;
 using ControleFacil.Api.Damain.Services;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFacil.Api.Controllers
 {
+    [ApiController]
+    [Route("usuarios")]
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
@@ -20,18 +23,40 @@ namespace ControleFacil.Api.Controllers
 
 
         [HttpPost] //HttpPost > Cadastrando algo no banco
+        [Route("login")]
+        [AllowAnonymous] //qualquer um cadastra
+        public async Task<IActionResult> Autenticar(UsuarioLoginRequestContract contrato)
+        {
+            try
+            {   //Create > Envia um código HTTP 201 > Indicando que a entidade foi criada com sucesso.
+                return Ok(await _usuarioService.Autenticar(contrato));
+            }
+            catch (AuthenticationException ex)
+            {
+                return Unauthorized(new { statusCode = 401, message = ex.Message });
+            }
+            catch (Exception ex)
+            {  //Retorna um código HTTP 500 indicando um erro no código.
+                return Problem(ex.Message);
+            }
+        }
+
+
+        [HttpPost] //HttpPost > Cadastrando algo no banco
         [AllowAnonymous] //qualquer um cadastra
         public async Task<IActionResult> Adicionar(UsuarioRequestContract contrato)
         {
             try
             {   //Create > Envia um código HTTP 201 > Indicando que a entidade foi criada com sucesso.
-                return Created("", await _usuarioService.Adicionar(contrato, 0)) ;
+                return Created("", await _usuarioService.Adicionar(contrato, 0));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {  //Retorna um código HTTP 500 indicando um erro no código.
                 return Problem(ex.Message);
             }
         }
+
+
 
         [HttpGet] //Consultar algo
         [AllowAnonymous] //qualquer um cadastra
@@ -41,21 +66,22 @@ namespace ControleFacil.Api.Controllers
             {
                 return Ok(await _usuarioService.Obter(0));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Problem(ex.Message);
             }
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> Obter(long id)
         {
             try
             {
                 return Ok(await _usuarioService.Obter(id, 0));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Problem(ex.Message);
             }
@@ -63,23 +89,23 @@ namespace ControleFacil.Api.Controllers
 
         [HttpPut] //HttpPut > Faz uma atualização
         [Route("{id}")]
-        [AllowAnonymous] //qualquer um cadastra
+        [Authorize]
         public async Task<IActionResult> Atualizar(long id, UsuarioRequestContract contrato)
         {
             try
             {
-                return Ok(await _usuarioService.Atualizar(id,contrato, 0)) ;
+                return Ok(await _usuarioService.Atualizar(id, contrato, 0));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Problem(ex.Message);
             }
         }
 
-        
+
         [HttpDelete]
         [Route("{id}")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> Deletar(long id)
         {
             try
@@ -88,7 +114,7 @@ namespace ControleFacil.Api.Controllers
                 return NoContent();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Problem(ex.Message);
             }

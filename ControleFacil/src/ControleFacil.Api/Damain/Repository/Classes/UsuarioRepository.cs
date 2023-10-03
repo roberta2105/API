@@ -34,7 +34,7 @@ namespace ControleFacil.Api.Damain.Repository.Classes
             //declara uma variável "usuarioBanco" do tipo Usuario que é igual a um Usuario no banco onde o Id do
             //Usuario do banco é igual ao Id do usuario que está sendo passado. Ou seja o usuarioBanco aramazena
             //os valores de Usuario existente no banco.
-            Usuario usuarioBanco = _contexto.Usuario.Where(u => u.Id == usuario.Id)
+            Usuario usuarioBanco = _contexto.Usuario.Where(u => u.id == usuario.id)
             //Retorna o primeiro objeto encontrado ou null.
             .FirstOrDefault();
 
@@ -69,13 +69,13 @@ namespace ControleFacil.Api.Damain.Repository.Classes
         {
             //Retorna uma lista de usuários ordenados por id
             return await _contexto.Usuario.AsNoTracking()
-                                        .OrderBy(u => u.Id)
+                                        .OrderBy(u => u.id)
                                         .ToListAsync();
         }
 
         public async Task<Usuario> Obter(long id)
         {
-            return await _contexto.Usuario.AsNoTracking().Where(u => u.Id == id)
+            return await _contexto.Usuario.AsNoTracking().Where(u => u.id == id)
             .FirstOrDefaultAsync();
         }
     }

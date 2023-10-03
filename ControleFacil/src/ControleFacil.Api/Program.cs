@@ -47,13 +47,14 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     .AddSingleton(builder.Configuration)
     .AddSingleton(builder.Environment)
     .AddSingleton(mapper)
+    .AddScoped<TokenService>()
 
     //A linha de código está dizendo ao sistema que, 
     //sempre que alguém precisar de um objeto que atenda à interface IUsuarioRepository, ele deve 
     //instanciar a classe UsuarioRepository. 
     .AddScoped<IUsuarioRepository, UsuarioRepository>()
-    .AddScoped<INaturezaRepository, NaturezaRepository>()
     .AddScoped<IUsuarioService, UsuarioService>()
+    .AddScoped<INaturezaRepository, NaturezaRepository>()
     .AddScoped<IServices<NaturezaRequestContract, NaturezaResponseContract, long>, NaturezaService>();
 }
 

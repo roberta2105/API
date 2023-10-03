@@ -10,7 +10,7 @@ namespace ControleFacil.Api.Contract.Usuario
         //Email
         //Senha
         //DataInativacao
-        public long Id { get; set; } //gerado automaticamente pelo banco
+        public long id { get; set; } //gerado automaticamente pelo banco
         public DateTime DataCadastro { get; set; } //gerado na hora da criação
     }
 }
