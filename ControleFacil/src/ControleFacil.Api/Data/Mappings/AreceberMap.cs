@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ControleFacil.Api.Data.Mappings
 {
-    public class ApagarMap : IEntityTypeConfiguration<Apagar>
+    public class AreceberMap : IEntityTypeConfiguration<Areceber>
     {
-        public void Configure(EntityTypeBuilder<Apagar> builder)
+        public void Configure(EntityTypeBuilder<Areceber> builder)
         {
-            builder.ToTable("apagar")
+            builder.ToTable("areceber")
             .HasKey(p => p.id);
 
             builder.HasOne(p => p.Usuario)
@@ -35,7 +35,7 @@ namespace ControleFacil.Api.Data.Mappings
             .HasColumnType("double precision")
             .IsRequired();
 
-            builder.Property(p => p.valorPago)
+            builder.Property(p => p.valorRecebido)
             .HasColumnType("double precision");
 
             builder.Property(p => p.dataCadastro)
@@ -49,7 +49,7 @@ namespace ControleFacil.Api.Data.Mappings
             .HasColumnType("timestamp")
             .IsRequired();
 
-            builder.Property(p => p.dataPagamento)
+            builder.Property(p => p.dataRecebimento)
             .HasColumnType("timestamp");
 
             

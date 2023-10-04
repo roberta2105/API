@@ -6,6 +6,7 @@ using AutoMapper;
 using ControleFacil.Api.Contract.NaturezaDeLancamento;
 using ControleFacil.Api.Damain.Models;
 using ControleFacil.Api.Damain.Repository.Interfaces;
+using ControleFacil.Api.Exceptions;
 
 
 namespace ControleFacil.Api.Damain.Services.Classes
@@ -75,7 +76,7 @@ namespace ControleFacil.Api.Damain.Services.Classes
 
             if(NaturezaDeLancamento is null || NaturezaDeLancamento.idUsuario != idUsuario)
             {
-                throw new Exception($"Não foi encontrado nenhuma natureza de lançamento pelo id {id}");
+                throw new NotFoundException($"Não foi encontrado nenhuma natureza de lançamento pelo id {id}");
             }
             return NaturezaDeLancamento;
         }

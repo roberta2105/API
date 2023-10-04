@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleFacil.Api.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230923001229_CriarEntidadadeApagar")]
-    partial class CriarEntidadadeApagar
+    [Migration("20231003205757_CriarEntidadeUsuario")]
+    partial class CriarEntidadeUsuario
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,18 +37,16 @@ namespace ControleFacil.Api.Migrations
                         .HasColumnType("timestamp");
 
                     b.Property<DateTime?>("dataInativacao")
-                        .IsRequired()
                         .HasColumnType("timestamp");
 
                     b.Property<DateTime?>("dataPagamento")
-                        .IsRequired()
                         .HasColumnType("timestamp");
 
                     b.Property<DateTime?>("dataReferencia")
-                        .IsRequired()
                         .HasColumnType("timestamp");
 
-                    b.Property<DateTime>("dataVencimento")
+                    b.Property<DateTime?>("dataVencimento")
+                        .IsRequired()
                         .HasColumnType("timestamp");
 
                     b.Property<string>("descricao")
@@ -61,10 +59,14 @@ namespace ControleFacil.Api.Migrations
                     b.Property<long>("idUsuario")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("observacao")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR");
+
                     b.Property<double>("valorOriginal")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("valorPago")
+                    b.Property<double?>("valorPago")
                         .HasColumnType("double precision");
 
                     b.HasKey("id");
@@ -74,6 +76,60 @@ namespace ControleFacil.Api.Migrations
                     b.HasIndex("idUsuario");
 
                     b.ToTable("apagar", (string)null);
+                });
+
+            modelBuilder.Entity("ControleFacil.Api.Damain.Models.Areceber", b =>
+                {
+                    b.Property<long>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("id"));
+
+                    b.Property<DateTime>("dataCadastro")
+                        .HasColumnType("timestamp");
+
+                    b.Property<DateTime?>("dataInativacao")
+                        .HasColumnType("timestamp");
+
+                    b.Property<DateTime?>("dataRecebimento")
+                        .HasColumnType("timestamp");
+
+                    b.Property<DateTime?>("dataReferencia")
+                        .HasColumnType("timestamp");
+
+                    b.Property<DateTime?>("dataVencimento")
+                        .IsRequired()
+                        .HasColumnType("timestamp");
+
+                    b.Property<string>("descricao")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<long>("idNaturezaDeLancamento")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("idUsuario")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("observacao")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<double>("valorOriginal")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("valorRecebido")
+                        .IsRequired()
+                        .HasColumnType("double precision");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("idNaturezaDeLancamento");
+
+                    b.HasIndex("idUsuario");
+
+                    b.ToTable("areceber", (string)null);
                 });
 
             modelBuilder.Entity("ControleFacil.Api.Damain.Models.NaturezaDeLancamento", b =>
@@ -136,6 +192,25 @@ namespace ControleFacil.Api.Migrations
                 });
 
             modelBuilder.Entity("ControleFacil.Api.Damain.Models.Apagar", b =>
+                {
+                    b.HasOne("ControleFacil.Api.Damain.Models.NaturezaDeLancamento", "NaturezaDeLancamento")
+                        .WithMany()
+                        .HasForeignKey("idNaturezaDeLancamento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ControleFacil.Api.Damain.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("idUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NaturezaDeLancamento");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("ControleFacil.Api.Damain.Models.Areceber", b =>
                 {
                     b.HasOne("ControleFacil.Api.Damain.Models.NaturezaDeLancamento", "NaturezaDeLancamento")
                         .WithMany()

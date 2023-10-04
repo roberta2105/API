@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Authentication;
-using System.Threading.Tasks;
-using ControleFacil.Api.Contract.Usuario;
+using ControleFacil.Api.Contract.Areceber;
 using ControleFacil.Api.Damain.Services;
 using ControleFacil.Api.Exceptions;
 using Microsoft.AspNetCore.Authorization;
@@ -12,49 +7,27 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControleFacil.Api.Controllers
 {
     [ApiController]
-    [Route("usuarios")]
-    public class UsuarioController : BaseController
+    [Route("areceber")]
+    public class AreceberController : BaseController
     {
-        private readonly IUsuarioService _usuarioService;
+        private readonly IServices<AreceberRequestContract, AreceberResponseContract, long> _areceberService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public AreceberController(
+            IServices<AreceberRequestContract, AreceberResponseContract, long> areceberService)
         {
-            _usuarioService = usuarioService;
+            _areceberService = areceberService;
         }
 
-
         [HttpPost] //HttpPost > Cadastrando algo no banco
-        [Route("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Autenticar(UsuarioLoginRequestContract contrato)
+        [Authorize]
+        public async Task<IActionResult> Adicionar(AreceberRequestContract contrato)
         {
             try
-            {   //Create > Envia um código HTTP 201 > Indicando que a entidade foi criada com sucesso.
-                return Ok(await _usuarioService.Autenticar(contrato));
-            }
-            catch (AuthenticationException ex)
             {
-                return Unauthorized(RetornarModelUnauthorized(ex));
+                long idUsuario = ObterIdUsuarioLogado();
+                return Created("", await _areceberService.Adicionar(contrato, idUsuario));
             }
-            catch (Exception ex)
-            {  //Retorna um código HTTP 500 indicando um erro no código.
-                return Problem(ex.Message);
-            }
-        }
 
-
-        [HttpPost] //HttpPost > Cadastrando algo no banco
-        [AllowAnonymous]
-        public async Task<IActionResult> Adicionar(UsuarioRequestContract contrato)
-        {
-            try
-            {   //Create > Envia um código HTTP 201 > Indicando que a entidade foi criada com sucesso.
-                return Created("", await _usuarioService.Adicionar(contrato, 0));
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(RetornarModelNotFound(ex));
-            }
             catch (BadRequestException ex)
             {
                 return BadRequest(RetornarModelBadRequest(ex));
@@ -71,7 +44,8 @@ namespace ControleFacil.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.Obter(0));
+                long idUsuario = ObterIdUsuarioLogado();
+                return Ok(await _areceberService.Obter(idUsuario));
             }
             catch (Exception ex)
             {
@@ -86,7 +60,8 @@ namespace ControleFacil.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.Obter(id, 0));
+                long idUsuario = ObterIdUsuarioLogado();
+                return Ok(await _areceberService.Obter(id, idUsuario));
             }
             catch (NotFoundException ex)
             {
@@ -101,11 +76,12 @@ namespace ControleFacil.Api.Controllers
         [HttpPut] //HttpPut > Faz uma atualização
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Atualizar(long id, UsuarioRequestContract contrato)
+        public async Task<IActionResult> Atualizar(long id, AreceberRequestContract contrato)
         {
             try
             {
-                return Ok(await _usuarioService.Atualizar(id, contrato, 0));
+                long idUsuario = ObterIdUsuarioLogado();
+                return Ok(await _areceberService.Atualizar(id, contrato, idUsuario));
             }
             catch (NotFoundException ex)
             {
@@ -129,9 +105,9 @@ namespace ControleFacil.Api.Controllers
         {
             try
             {
-                await _usuarioService.Deletar(id, 0);
+                long idUsuario = ObterIdUsuarioLogado();
+                await _areceberService.Deletar(id, idUsuario);
                 return NoContent();
-
             }
             catch (NotFoundException ex)
             {

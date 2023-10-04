@@ -13,8 +13,8 @@ namespace ControleFacil.Api.Data
         //Armagena a entidade no DbSet
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<NaturezaDeLancamento> NaturezaDeLancamento { get; set; }
-
         public DbSet<Apagar> Apagar { get; set; }
+        public DbSet<Areceber> Areceber { get; set; }
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options){}
@@ -27,6 +27,8 @@ namespace ControleFacil.Api.Data
             modelBuilder.ApplyConfiguration(new NaturezaDeLancamentoMap());
 
             modelBuilder.ApplyConfiguration(new ApagarMap());
+
+             modelBuilder.ApplyConfiguration(new AreceberMap());
         }
     }
 }

@@ -1,6 +1,8 @@
 using System.Text;
 using AutoMapper;
 using ControleFacil.Api.AutoMapper;
+using ControleFacil.Api.Contract.Apagar;
+using ControleFacil.Api.Contract.Areceber;
 using ControleFacil.Api.Contract.NaturezaDeLancamento;
 using ControleFacil.Api.Damain.Repository.Classes;
 using ControleFacil.Api.Damain.Repository.Interfaces;
@@ -9,7 +11,6 @@ using ControleFacil.Api.Damain.Services.Classes;
 using ControleFacil.Api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -37,6 +38,8 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     {
         cfg.AddProfile<UsuarioProfile>();
         cfg.AddProfile<NaturezaProfile>();
+        cfg.AddProfile<ApagarProfile>();
+        cfg.AddProfile<AreceberProfile>();
         //colocar outros profiles
     });
 
@@ -55,7 +58,11 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     .AddScoped<IUsuarioRepository, UsuarioRepository>()
     .AddScoped<IUsuarioService, UsuarioService>()
     .AddScoped<INaturezaRepository, NaturezaRepository>()
-    .AddScoped<IServices<NaturezaRequestContract, NaturezaResponseContract, long>, NaturezaService>();
+    .AddScoped<IServices<NaturezaRequestContract, NaturezaResponseContract, long>, NaturezaService>()
+    .AddScoped<IApagarRepository, ApagarRepository>()
+    .AddScoped<IServices<ApagarRequestContract, ApagarResponseContract, long>, ApagarService>()
+    .AddScoped<IAreceberRepository, AreceberRepository>()
+    .AddScoped<IServices<AreceberRequestContract, AreceberResponseContract, long>, AreceberService>();
 }
 
 // Configura o serviços da API.

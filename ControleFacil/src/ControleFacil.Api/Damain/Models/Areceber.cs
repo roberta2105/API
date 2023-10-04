@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace ControleFacil.Api.Damain.Models
 {
-    public class Apagar : Titulo
+    public class Areceber : Titulo
     {
-    public double? valorPago { get; set; }
-    public DateTime? dataPagamento { get; set; }
+    [Required(ErrorMessage ="Campo obrigatório")]
+    public double? valorRecebido { get; set; }
+    public DateTime? dataRecebimento { get; set; }
     }
 }
