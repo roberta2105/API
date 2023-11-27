@@ -18,7 +18,7 @@ namespace ControleFacil.Api.Damain.Services
         Task<IEnumerable<RS>> Obter(I idUsuario);
         
         //Obtem a entidade por id de acordo com o usuario específico
-        Task<RS> Obter(I id, I idUsuario);
+        Task<RS> ObterId(I id, I idUsuario);
 
         //Adiciona a entidade de acordo com o id do usuario.
         Task<RS> Adicionar(RQ entidade, I idUsuario);

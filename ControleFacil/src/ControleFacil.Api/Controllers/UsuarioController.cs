@@ -86,7 +86,7 @@ namespace ControleFacil.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.Obter(id, 0));
+                return Ok(await _usuarioService.ObterId(id, 0));
             }
             catch (NotFoundException ex)
             {

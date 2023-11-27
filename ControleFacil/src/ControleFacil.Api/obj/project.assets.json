@@ -3119,19 +3119,21 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\C#\\API\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
+      "projectUniqueName": "C:\\C#\\API-main\\API-main\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
       "projectName": "ControleFacil.Api",
-      "projectPath": "C:\\C#\\API\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
+      "projectPath": "C:\\C#\\API-main\\API-main\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
       "packagesPath": "C:\\Users\\RobertaMedeirosStump\\.nuget\\packages\\",
-      "outputPath": "C:\\C#\\API\\ControleFacil\\src\\ControleFacil.Api\\obj\\",
+      "outputPath": "C:\\C#\\API-main\\API-main\\ControleFacil\\src\\ControleFacil.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\RobertaMedeirosStump\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\RobertaMedeirosStump\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3214,7 +3216,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

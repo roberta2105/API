@@ -51,11 +51,16 @@ namespace ControleFacil.Api.Damain.Repository.Classes
 
         }
 
-        //Deleção lógica
+        
         public async Task Deletar(NaturezaDeLancamento natureza)
         {
-            natureza.dataInativacao = DateTime.Now;
-            await Atualizar(natureza);
+            //Deleção lógica
+            // natureza.dataInativacao = DateTime.Now;
+            // await Atualizar(natureza);
+
+            _contexto.Entry(natureza).State = EntityState.Deleted;
+            await _contexto.SaveChangesAsync();
+
         }
 
         public async Task<IEnumerable<NaturezaDeLancamento>> Obter()

@@ -60,7 +60,7 @@ namespace ControleFacil.Api.Controllers
             try
             {
                 long idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _apagarService.Obter(id, idUsuario));
+                return Ok(await _apagarService.ObterId(id, idUsuario));
             }
             catch (NotFoundException ex)
             {

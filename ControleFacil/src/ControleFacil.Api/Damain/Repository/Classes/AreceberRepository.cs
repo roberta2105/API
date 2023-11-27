@@ -40,11 +40,14 @@ namespace ControleFacil.Api.Damain.Repository.Classes
 
         }
 
-        //Deleção lógica
         public async Task Deletar(Areceber areceber)
         {
-            areceber.dataInativacao = DateTime.Now;
-            await Atualizar(areceber);
+            //Deleção lógica
+            // areceber.dataInativacao = DateTime.Now;
+            // await Atualizar(areceber);
+
+            _contexto.Entry(areceber).State = EntityState.Deleted;
+            await _contexto.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Areceber>> Obter()
@@ -66,6 +69,13 @@ namespace ControleFacil.Api.Damain.Repository.Classes
             return await _contexto.Areceber.AsNoTracking().Where(n => n.idUsuario == idUsuario)
             .OrderBy(n => n.id)
             .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Areceber>> ObterPorNaturezaDeLancamento(long idNaturezaDeLancamento, long idUsuario)
+        {
+            return await _contexto.Areceber
+                .Where(r => r.idNaturezaDeLancamento == idNaturezaDeLancamento && r.idUsuario == idUsuario)
+                .ToListAsync();
         }
 
     }

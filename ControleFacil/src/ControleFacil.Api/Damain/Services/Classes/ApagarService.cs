@@ -67,7 +67,7 @@ namespace ControleFacil.Api.Damain.Services.Classes
             return apagar.Select(apagar => _mapper.Map<ApagarResponseContract>(apagar));
         }
 
-        public async Task<ApagarResponseContract> Obter(long id, long idUsuario)
+        public async Task<ApagarResponseContract> ObterId(long id, long idUsuario)
         {
             var apagar = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
 

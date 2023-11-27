@@ -71,7 +71,7 @@ namespace ControleFacil.Api.Controllers
             try
             {
                 long idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _naturezaService.Obter(id, idUsuario));
+                return Ok(await _naturezaService.ObterId(id, idUsuario));
             }
             catch (NotFoundException ex)
             {

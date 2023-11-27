@@ -8,6 +8,7 @@ using ControleFacil.Api.Damain.Repository.Classes;
 using ControleFacil.Api.Damain.Repository.Interfaces;
 using ControleFacil.Api.Damain.Services;
 using ControleFacil.Api.Damain.Services.Classes;
+using ControleFacil.Api.Damain.Services.Interfaces;
 using ControleFacil.Api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,7 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     .AddSingleton(mapper)
     .AddScoped<TokenService>()
 
-    //A linha de código está dizendo ao sistema que, 
+    //A linha de código está dizendo aoR sistema que, 
     //sempre que alguém precisar de um objeto que atenda à interface IUsuarioRepository, ele deve 
     //instanciar a classe UsuarioRepository. 
     .AddScoped<IUsuarioRepository, UsuarioRepository>()
@@ -62,7 +63,7 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     .AddScoped<IApagarRepository, ApagarRepository>()
     .AddScoped<IServices<ApagarRequestContract, ApagarResponseContract, long>, ApagarService>()
     .AddScoped<IAreceberRepository, AreceberRepository>()
-    .AddScoped<IServices<AreceberRequestContract, AreceberResponseContract, long>, AreceberService>();
+    .AddScoped<IReceberService, AreceberService>();
 }
 
 // Configura o serviços da API.

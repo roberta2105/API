@@ -1,5 +1,6 @@
 using ControleFacil.Api.Contract.Areceber;
 using ControleFacil.Api.Damain.Services;
+using ControleFacil.Api.Damain.Services.Interfaces;
 using ControleFacil.Api.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,9 @@ namespace ControleFacil.Api.Controllers
     [Route("areceber")]
     public class AreceberController : BaseController
     {
-        private readonly IServices<AreceberRequestContract, AreceberResponseContract, long> _areceberService;
+        private readonly IReceberService _areceberService;
 
-        public AreceberController(
-            IServices<AreceberRequestContract, AreceberResponseContract, long> areceberService)
+        public AreceberController(IReceberService areceberService)
         {
             _areceberService = areceberService;
         }
@@ -38,14 +38,31 @@ namespace ControleFacil.Api.Controllers
             }
         }
 
-        [HttpGet] //Consultar algo
+        // [HttpGet] //Consultar algo
+        // [Authorize]
+        // public async Task<IActionResult> Obter()
+        // {
+        //     try
+        //     {
+        //         long idUsuario = ObterIdUsuarioLogado();
+        //         return Ok(await _areceberService.Obter(idUsuario));
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return Problem(ex.Message);
+        //     }
+        // }
+
+        [HttpGet] 
         [Authorize]
-        public async Task<IActionResult> Obter()
+        public async Task<IActionResult> Obter(long idNaturezaDeLancamento)
         {
             try
             {
                 long idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _areceberService.Obter(idUsuario));
+                var recebimentosPorNatureza = await _areceberService.ObterPorNaturezaDeLancamento(idNaturezaDeLancamento, idUsuario);
+
+                return Ok(recebimentosPorNatureza); // Retornar os recebimentos por natureza
             }
             catch (Exception ex)
             {
@@ -56,12 +73,12 @@ namespace ControleFacil.Api.Controllers
         [HttpGet]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Obter(long id)
+        public async Task<IActionResult> ObterId(long id)
         {
             try
             {
                 long idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _areceberService.Obter(id, idUsuario));
+                return Ok(await _areceberService.ObterId(id, idUsuario));
             }
             catch (NotFoundException ex)
             {

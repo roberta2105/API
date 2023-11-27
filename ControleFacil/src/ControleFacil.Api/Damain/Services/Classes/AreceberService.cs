@@ -2,12 +2,13 @@ using AutoMapper;
 using ControleFacil.Api.Contract.Areceber;
 using ControleFacil.Api.Damain.Models;
 using ControleFacil.Api.Damain.Repository.Interfaces;
+using ControleFacil.Api.Damain.Services.Interfaces;
 using ControleFacil.Api.Exceptions;
 
 
 namespace ControleFacil.Api.Damain.Services.Classes
 {
-    public class AreceberService : IServices<AreceberRequestContract, AreceberResponseContract, long>
+    public class AreceberService : IReceberService
     {
         private readonly IAreceberRepository _areceberRepository;
         public readonly IMapper _mapper;
@@ -55,9 +56,9 @@ namespace ControleFacil.Api.Damain.Services.Classes
 
         public async Task Deletar(long id, long idUsuario)
         {
-            var areceber = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            var areceber = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario) ?? throw new NotFoundException("Recebimento não encontrado para deleção");
 
-            await _areceberRepository.Deletar(areceber);
+            await _areceberRepository.Deletar(_mapper.Map<Areceber>(areceber));
         }
 
         public async Task<IEnumerable<AreceberResponseContract>> Obter(long idUsuario)
@@ -67,12 +68,13 @@ namespace ControleFacil.Api.Damain.Services.Classes
             return areceber.Select(areceber => _mapper.Map<AreceberResponseContract>(areceber));
         }
 
-        public async Task<AreceberResponseContract> Obter(long id, long idUsuario)
+        public async Task<AreceberResponseContract> ObterId(long id, long idUsuario)
         {
             var areceber = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
 
             return _mapper.Map<AreceberResponseContract>(areceber);
         }
+
 
         private async Task<Areceber> ObterPorIdVinculadoAoIdUsuario(long id, long idUsuario)
         {
@@ -85,6 +87,14 @@ namespace ControleFacil.Api.Damain.Services.Classes
             return areceber;
         }
 
+        public async Task<IEnumerable<AreceberResponseContract>> ObterPorNaturezaDeLancamento(long idNaturezaDeLancamento, long idUsuario)
+        {
+            var recebimentos = await _areceberRepository.ObterPorNaturezaDeLancamento(idNaturezaDeLancamento, idUsuario);
+
+            return recebimentos.Select(recebimento => _mapper.Map<AreceberResponseContract>(recebimento));
+        }
+
+
         private void Validar(AreceberRequestContract entidade)
         {
             if (entidade.valorOriginal < 0 || entidade.valorRecebido < 0)
@@ -93,5 +103,6 @@ namespace ControleFacil.Api.Damain.Services.Classes
             }
         }
 
+     
     }
 }

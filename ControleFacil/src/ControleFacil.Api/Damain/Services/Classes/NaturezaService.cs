@@ -51,9 +51,9 @@ namespace ControleFacil.Api.Damain.Services.Classes
 
         public async Task Deletar(long id, long idUsuario)
         {
-            var natureza = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            var natureza = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario) ?? throw new NotFoundException("Natureza não encontrada para deleção");
 
-            await _naturezaRepository.Deletar(natureza);
+            await _naturezaRepository.Deletar(_mapper.Map<NaturezaDeLancamento>(natureza));
         }
 
         public async Task<IEnumerable<NaturezaResponseContract>> Obter(long idUsuario)
@@ -63,7 +63,7 @@ namespace ControleFacil.Api.Damain.Services.Classes
             return natureza.Select(natureza => _mapper.Map<NaturezaResponseContract>(natureza));
         }
 
-        public async Task<NaturezaResponseContract> Obter(long id, long idUsuario)
+        public async Task<NaturezaResponseContract> ObterId(long id, long idUsuario)
         {
             var natureza = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
 

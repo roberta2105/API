@@ -102,7 +102,7 @@ namespace ControleFacil.Api.Damain.Services.Classes
             return usuarios.Select(usuario => _mapper.Map<UsuarioResponseContract>(usuario));
         }
 
-        public async Task<UsuarioResponseContract> Obter(long id, long idUsuario)//idUsuario não usado
+        public async Task<UsuarioResponseContract> ObterId(long id, long idUsuario)//idUsuario não usado
         {
             var usuario = await _usuarioRepository.Obter(id);
             return _mapper.Map<UsuarioResponseContract>(usuario);
