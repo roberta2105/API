@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\C#\\API-main\\API-main\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj": {}
+    "C:\\API\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj": {}
   },
   "projects": {
-    "C:\\C#\\API-main\\API-main\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj": {
+    "C:\\API\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\C#\\API-main\\API-main\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
+        "projectUniqueName": "C:\\API\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
         "projectName": "ControleFacil.Api",
-        "projectPath": "C:\\C#\\API-main\\API-main\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
+        "projectPath": "C:\\API\\ControleFacil\\src\\ControleFacil.Api\\ControleFacil.Api.csproj",
         "packagesPath": "C:\\Users\\RobertaMedeirosStump\\.nuget\\packages\\",
-        "outputPath": "C:\\C#\\API-main\\API-main\\ControleFacil\\src\\ControleFacil.Api\\obj\\",
+        "outputPath": "C:\\API\\ControleFacil\\src\\ControleFacil.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\RobertaMedeirosStump\\AppData\\Roaming\\NuGet\\NuGet.Config",

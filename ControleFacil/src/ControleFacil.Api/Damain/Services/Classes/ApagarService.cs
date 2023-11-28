@@ -2,12 +2,13 @@ using AutoMapper;
 using ControleFacil.Api.Contract.Apagar;
 using ControleFacil.Api.Damain.Models;
 using ControleFacil.Api.Damain.Repository.Interfaces;
+using ControleFacil.Api.Damain.Services.Interfaces;
 using ControleFacil.Api.Exceptions;
 
 
 namespace ControleFacil.Api.Damain.Services.Classes
 {
-    public class ApagarService : IServices<ApagarRequestContract, ApagarResponseContract, long>
+    public class ApagarService : IApagarService
     {
         private readonly IApagarRepository _apagarRepository;
         public readonly IMapper _mapper;
@@ -84,6 +85,15 @@ namespace ControleFacil.Api.Damain.Services.Classes
             }
             return apagar;
         }
+
+        
+        public async Task<IEnumerable<ApagarResponseContract>> ObterPorNaturezaDeLancamento(long idNaturezaDeLancamento, long idUsuario)
+        {
+            var pagamentos = await _apagarRepository.ObterPorNaturezaDeLancamento(idNaturezaDeLancamento, idUsuario);
+
+            return pagamentos.Select(apagar => _mapper.Map<ApagarResponseContract>(apagar));
+        }
+
 
         private void Validar (ApagarRequestContract entidade)
         {

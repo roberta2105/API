@@ -61,7 +61,7 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     .AddScoped<INaturezaRepository, NaturezaRepository>()
     .AddScoped<IServices<NaturezaRequestContract, NaturezaResponseContract, long>, NaturezaService>()
     .AddScoped<IApagarRepository, ApagarRepository>()
-    .AddScoped<IServices<ApagarRequestContract, ApagarResponseContract, long>, ApagarService>()
+    .AddScoped<IApagarService, ApagarService>()
     .AddScoped<IAreceberRepository, AreceberRepository>()
     .AddScoped<IReceberService, AreceberService>();
 }

@@ -1,5 +1,6 @@
 using ControleFacil.Api.Contract.Apagar;
 using ControleFacil.Api.Damain.Services;
+using ControleFacil.Api.Damain.Services.Interfaces;
 using ControleFacil.Api.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,8 @@ namespace ControleFacil.Api.Controllers
     [Route("apagar")]
     public class ApagarController : BaseController
     {
-        private readonly IServices<ApagarRequestContract, ApagarResponseContract, long> _apagarService;
-
-        public ApagarController(
-            IServices<ApagarRequestContract, ApagarResponseContract, long> apagarService)
+        private readonly IApagarService _apagarService;
+        public ApagarController(IApagarService apagarService)
         {
             _apagarService = apagarService;
         }
@@ -37,14 +36,31 @@ namespace ControleFacil.Api.Controllers
             }
         }
 
-        [HttpGet] //Consultar algo
+        // [HttpGet] //Consultar algo
+        // [Authorize]
+        // public async Task<IActionResult> Obter()
+        // {
+        //     try
+        //     {
+        //         long idUsuario = ObterIdUsuarioLogado();
+        //         return Ok(await _apagarService.Obter(idUsuario));
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return Problem(ex.Message);
+        //     }
+        // }
+
+        [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Obter()
+        public async Task<IActionResult> Obter(long idNaturezaDeLancamento)
         {
             try
             {
                 long idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _apagarService.Obter(idUsuario));
+                var pagamentosPorNatureza = await _apagarService.ObterPorNaturezaDeLancamento(idNaturezaDeLancamento, idUsuario);
+
+                return Ok(pagamentosPorNatureza); // Retornar os recebimentos por natureza
             }
             catch (Exception ex)
             {
@@ -55,7 +71,7 @@ namespace ControleFacil.Api.Controllers
         [HttpGet]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Obter(long id)
+        public async Task<IActionResult> ObterId(long id)
         {
             try
             {
